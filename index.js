@@ -1,4 +1,4 @@
-/* global Vue */
+/* global Vue, axios */
 var app = new Vue({
   el: "#app",
   data: function () {
@@ -6,12 +6,8 @@ var app = new Vue({
       message: "Hello from JavaScript!",
       message1: "Hello Vue!",
       hidden: false,
-      todos: [
-        { text: "Learn JavaScript" },
-        { text: "Learn Vue" },
-        { text: "Build something awesome" },
-        { text: "Sleep" },
-      ],
+      hiddenTodo: false,
+      todos: [],
       words: ["tea", "apple", "albino"],
       newWord: "",
     };
@@ -29,6 +25,25 @@ var app = new Vue({
       console.log(this.newWord);
       this.words.push(this.newWord);
       this.newWord = "";
+    },
+    loadTodos: function () {
+      console.log("I am loading todos...");
+      axios.get("https://jsonplaceholder.typicode.com/todos").then((response) => {
+        console.log(response.data);
+        this.todos = response.data;
+        this.hiddenTodo = !this.hiddenTodo;
+      });
+    },
+    postTodo: function () {
+      axios
+        .post("https://jsonplaceholder.typicode.com/todos", {
+          userId: 1,
+          title: "Flintstone",
+          completed: false,
+        })
+        .then(function (response) {
+          console.log(response);
+        });
     },
   },
 });

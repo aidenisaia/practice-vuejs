@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>Practice Vue.js</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="index.js" defer></script>
   </head>
 
@@ -22,7 +23,9 @@
       <p v-if="hidden">Now you can see me.</p>
       <button v-on:click="seeMessage">See message</button>
       <div>
-        <p v-for="todo in todos">{{ todo.text }}</p>
+        <button v-on:click="loadTodos()">Load Todos</button>
+        <button v-on:click="postTodo()">Add another todo</button>
+        <p v-if="hiddenTodo" v-for="todo in todos">{{ todo }}</p>
       </div>
       <br />
       <div>
